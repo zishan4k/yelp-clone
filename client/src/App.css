@@ -1,0 +1,135 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 24px;
+    padding: 0;
+    margin: 0;
+}
+
+h1 {
+    font-family: 'Montserrat';
+    margin: 0 auto;
+    padding: 20px 0;
+    text-align: center;
+    background-color: teal;
+    color: azure;
+}
+
+.container {
+    width: 90%;
+    margin: auto;
+}
+
+.form-container {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+form {
+    padding: 20px 0;
+    width: 100%;
+}
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-column {
+    flex: 1;
+    text-align: center;
+}
+
+.form-input {
+    width: 90%;
+    padding: 10px;
+    font-size: 14px;
+    background-color: white;
+    border-radius: 4px;
+    color: black;
+    border: 1px solid teal;
+}
+
+.add-btn {
+    border: none;
+    cursor: pointer;
+    background-color: teal;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 4px;
+    padding: 10px;
+    min-height: 30px;
+    min-width: 120px;
+}
+
+button:hover {
+    background-color: teal;
+    transition: 0.5s;
+}
+
+.add-btn-wrapper {
+    margin: auto 0;
+    padding: 10px;
+}
+
+.restaurants-table {
+    border-collapse: collapse;
+    margin: 25px auto;
+    font-size: 0.9em;
+    min-width: 80%;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+.restaurants-table thead tr {
+    background-color: teal;
+    color: white;
+    text-align: left;
+    font-weight: bold;
+}
+
+.restaurants-table th, .restaurants-table td {
+    padding: 12px 15px;
+}
+
+.restaurants-table tbody tr {
+    border-bottom: 1px solid #ddd;
+    background-color: rgb(220, 250, 220);
+}
+
+.restaurants-table tbody tr:hover {
+    /* font-weight: bold; */
+    color: teal;
+    background-color: #ECFFDC;
+    cursor: pointer;
+}
+
+
+/* .restaurants-table tbody tr:nth-child(even) {
+    background-color: #f3f3f3;
+}
+
+.restaurants-table tbody tr:nth-child(even):hover {
+    background-color: #d3d3d3;
+} */
+.restaurants-table tbody tr:last-child {
+    border-bottom: 2px solid teal;
+}
+
+.restaurants-table tbody tr td i {
+    color: teal;
+}
+
+.submit-btn {
+    align-content: center;
+}
