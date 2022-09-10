@@ -21,7 +21,7 @@ app.get("/api/v1/restaurants", async (req, res) => {
       restaurants: results.rows,
     });
   } catch (err) {
-    throw err.response.data;
+    throw err.response;
   }
 });
 
@@ -29,12 +29,22 @@ app.get("/api/v1/restaurants", async (req, res) => {
 app.get("/api/v1/restaurants/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await db.query("SELECT * FROM restaurants where id = $1", [
-      id,
-    ]);
+
+    const restaurant = await db.query(
+      "SELECT * FROM restaurants where id = $1",
+      [id]
+    );
+
+    const reviews = await db.query(
+      "SELECT * FROM reviews where restaurant_id = $1",
+      [id]
+    );
     res.status(200).json({
       status: "success",
-      restaurant: result.rows[0],
+      data: {
+        restaurant: restaurant.rows[0],
+        reviews: reviews.rows,
+      },
     });
   } catch (err) {
     throw err.response;
@@ -55,7 +65,7 @@ app.post("/api/v1/restaurants/", async (req, res) => {
       restaurant: result.rows[0],
     });
   } catch (err) {
-    throw err.response.data;
+    throw err.response;
   }
 });
 
@@ -73,7 +83,7 @@ app.put("/api/v1/restaurants/:id", async (req, res) => {
       restaurant: result.rows[0],
     });
   } catch (err) {
-    throw err.response.data;
+    throw err.response;
   }
 });
 
@@ -88,7 +98,24 @@ app.delete("/api/v1/restaurants/:id", async (req, res) => {
       status: "success",
     });
   } catch (err) {
-    throw err.response.data;
+    throw err.response;
+  }
+});
+
+app.post("/api/v1/restaurants/:id/review", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, rating, review } = req.body;
+    const result = await db.query(
+      "INSERT INTO reviews (restaurant_id, name, rating, review) VALUES ($1, $2, $3, $4) RETURNING *",
+      [id, name, rating, review]
+    );
+    res.status(201).json({
+      status: "success",
+      review: result.rows[0],
+    });
+  } catch (err) {
+    throw err.response;
   }
 });
 

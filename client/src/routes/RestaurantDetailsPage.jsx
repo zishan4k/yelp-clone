@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { RestaurantsContext } from "../context/RestaurantsContext";
 import API from "../api";
 import Rating from "../components/Rating";
+import Reviews from "../components/Reviews";
+import AddReview from "../components/AddReview";
 
 const RestaurantDetailsPage = () => {
   const { id } = useParams();
@@ -13,7 +15,7 @@ const RestaurantDetailsPage = () => {
     const fetchData = async () => {
       try {
         const response = await API.get(`/${id}`);
-        setSelectedRestaurant(response.data.restaurant);
+        setSelectedRestaurant(response.data.data);
       } catch (err) {
         throw err.response;
       }
@@ -24,8 +26,16 @@ const RestaurantDetailsPage = () => {
 
   return (
     <div>
-      <h1>{selectedRestaurant && selectedRestaurant.name}</h1>
-      <div>{selectedRestaurant && <Rating rating={3.5} />}</div>
+      {selectedRestaurant && (
+        <>
+          <h1>{selectedRestaurant.restaurant.name}</h1>
+          <div>
+            <Rating />
+            <Reviews reviews={selectedRestaurant.reviews} />
+            <AddReview />
+          </div>
+        </>
+      )}
     </div>
   );
 };
