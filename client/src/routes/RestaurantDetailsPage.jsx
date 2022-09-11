@@ -16,6 +16,7 @@ const RestaurantDetailsPage = () => {
       try {
         const response = await API.get(`/${id}`);
         setSelectedRestaurant(response.data.data);
+        // console.log(response.data.data);
       } catch (err) {
         throw err.response;
       }
@@ -30,7 +31,14 @@ const RestaurantDetailsPage = () => {
         <>
           <h1>{selectedRestaurant.restaurant.name}</h1>
           <div>
-            <Rating />
+            <Rating rating={selectedRestaurant.restaurant.avg_rating} />
+            <span>
+              {selectedRestaurant.restaurant.count
+                ? `(${selectedRestaurant.restaurant.count})`
+                : "No reviews"}
+            </span>
+          </div>
+          <div>
             <Reviews reviews={selectedRestaurant.reviews} />
             <AddReview />
           </div>

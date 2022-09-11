@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import API from "../api";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 const AddReview = () => {
   const { id } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [review, setReview] = useState("");
   const [rating, setRating] = useState("");
+
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,6 +23,9 @@ const AddReview = () => {
     } catch (err) {
       throw err.response;
     }
+    navigate("/");
+    await delay(10);
+    navigate(`${location.pathname}`);
   };
 
   return (

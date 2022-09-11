@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api";
 import { RestaurantsContext } from "../context/RestaurantsContext";
+import Rating from "./Rating";
 
 const RestaurantList = () => {
   const { restaurants, setRestaurants } = useContext(RestaurantsContext);
@@ -11,7 +12,7 @@ const RestaurantList = () => {
     const fetchData = async () => {
       try {
         const response = await API.get("/");
-        // console.log(response);
+        // console.log(response.data);
         setRestaurants(response.data.restaurants);
       } catch (err) {
         throw err;
@@ -39,6 +40,18 @@ const RestaurantList = () => {
     navigate(`/restaurants/${id}`);
   };
 
+  const handleRating = (restaurant) => {
+    if (!restaurant.count) {
+      return <span>No reviews</span>;
+    }
+    return (
+      <>
+        <Rating rating={restaurant.avg_rating} />
+        <span>{restaurant.count}</span>
+      </>
+    );
+  };
+
   return (
     <div>
       <table className="restaurants-table">
@@ -63,7 +76,7 @@ const RestaurantList = () => {
                   <td>{restaurant.name}</td>
                   <td>{restaurant.location}</td>
                   <td>{"£".repeat(restaurant.price_range)}</td>
-                  <td>Rating</td>
+                  <td>{handleRating(restaurant)}</td>
                   <td>
                     <i
                       className="fa-solid fa-pen-to-square"
